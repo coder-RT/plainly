@@ -443,9 +443,16 @@ document.getElementById('saveSettingsBtn').addEventListener('click', async () =>
   syncModeButtons();
   syncCustomPromptBar(document.getElementById('sCustomPrompt').value);
 
-  const alert = document.getElementById('sSaveAlert');
-  alert.style.display = 'block';
-  setTimeout(() => { alert.style.display = 'none'; }, 2500);
+  // Navigate back to main view and re-render so the "Open Settings" welcome
+  // card is replaced with the ready state now that a key exists.
+  showMain();
+  const { apiKey } = await chrome.storage.sync.get('apiKey');
+  const { current } = await chrome.storage.session.get('current');
+  if (current) {
+    renderEntry(current, apiKey);
+  } else {
+    renderEmpty(apiKey);
+  }
 });
 
 // ── Main view event bindings ──────────────────────────────────────────────────
