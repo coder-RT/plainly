@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plainly — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+
+    <header class="page-header">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="20" height="20" rx="5" fill="#6366f1"/>
+          <text x="10" y="14.5" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="-apple-system, system-ui, sans-serif">P</text>
+        </svg>
+        <div>
+          <div class="logo-name">Plainly</div>
+          <div class="logo-tagline">Highlight anything. Understand everything.</div>
+        </div>
+      </div>
+    </header>
+
+    <div id="saveAlert" class="alert alert-success" style="display:none">
+      ✓ Settings saved
+    </div>
+
+    <!-- AI Provider -->
+    <section class="section">
+      <div class="section-title">AI Provider</div>
+      <div class="section-desc">Choose where explanations are generated. All text is sent directly from your browser — Plainly has no servers.</div>
+      <div class="provider-grid" id="providerGrid">
+        <label class="provider-card selected" data-provider="openai">
+          <input type="radio" name="provider" value="openai" checked>
+          <div class="provider-name">OpenAI</div>
+          <div class="provider-desc">GPT-4o mini (recommended)</div>
+        </label>
+        <label class="provider-card" data-provider="groq">
+          <input type="radio" name="provider" value="groq">
+          <div class="provider-name">Groq</div>
+          <div class="provider-desc">Free tier · Llama 3.3</div>
+        </label>
+        <label class="provider-card" data-provider="custom">
+          <input type="radio" name="provider" value="custom">
+          <div class="provider-name">Custom</div>
+          <div class="provider-desc">Ollama, n8n, any OpenAI-compatible API</div>
+        </label>
+      </div>
+    </section>
+
+    <!-- API Key -->
+    <section class="section">
+      <div class="section-title">API Key</div>
+      <div class="form-group" style="margin-top:0">
+        <div class="input-row">
+          <input type="password" id="apiKey" class="input" placeholder="Paste your API key…" autocomplete="off" spellcheck="false">
+          <button type="button" class="eye-btn" id="toggleKey" title="Show / hide key">
+            <svg id="eyeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <p class="field-hint" id="keyHint">
+          Get your <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI API key →</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Model (OpenAI / Groq) -->
+    <section class="section" id="modelSection">
+      <div class="section-title">Model</div>
+      <div class="form-group" style="margin-top:0">
+        <select id="model" class="input"></select>
+      </div>
+    </section>
+
+    <!-- Custom Endpoint (hidden unless custom provider) -->
+    <section class="section" id="customSection" style="display:none">
+      <div class="section-title">Custom Endpoint</div>
+      <div class="form-group" style="margin-top:0">
+        <label class="label">API URL</label>
+        <input type="url" id="customEndpoint" class="input" placeholder="http://localhost:11434/v1/chat/completions">
+        <p class="field-hint">
+          Ollama default: <code>http://localhost:11434/v1/chat/completions</code><br>
+          n8n webhook: paste your webhook URL here
+        </p>
+      </div>
+      <div class="form-group">
+        <label class="label">Model name</label>
+        <input type="text" id="customModel" class="input" placeholder="llama3.2">
+      </div>
+    </section>
+
+    <!-- Default Mode -->
+    <section class="section">
+      <div class="section-title">Default Explanation Mode</div>
+      <div class="section-desc">You can also switch modes live in the side panel.</div>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="mode" value="adhd" checked>
+          <div>
+            <div class="radio-title">ADHD-friendly</div>
+            <div class="radio-desc">Short bullets, bold key terms, plain language — under 150 words</div>
+          </div>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="mode" value="eli5">
+          <div>
+            <div class="radio-title">ELI5 — Explain like I'm 5</div>
+            <div class="radio-desc">Simple analogy, 2–4 sentences, zero jargon</div>
+          </div>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="mode" value="detailed">
+          <div>
+            <div class="radio-title">Detailed</div>
+            <div class="radio-desc">Structured breakdown with definitions and examples</div>
+          </div>
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="mode" value="custom">
+          <div>
+            <div class="radio-title">Custom prompt</div>
+            <div class="radio-desc">Write your own system prompt below</div>
+          </div>
+        </label>
+      </div>
+    </section>
+
+    <!-- Custom Prompt -->
+    <section class="section" id="customPromptSection" style="display:none">
+      <div class="section-title">Custom System Prompt</div>
+      <div class="form-group" style="margin-top:0">
+        <textarea id="customPrompt" class="input textarea" placeholder="You are a helpful assistant. When given text, explain it clearly by..."></textarea>
+        <p class="field-hint">This prompt is sent to the AI before every selected text. The selected text follows as the user message.</p>
+      </div>
+    </section>
+
+    <!-- Behavior -->
+    <section class="section">
+      <div class="section-title">Behavior</div>
+      <div class="form-group" style="margin-top:0">
+        <label class="label">Minimum selection length (characters)</label>
+        <input type="number" id="minSelectionLength" class="input input-sm" min="5" max="500" value="20">
+        <p class="field-hint">Selections shorter than this won't trigger an explanation. Prevents noise from small highlights.</p>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="saveBtn">Save Settings</button>
+    </div>
+
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>

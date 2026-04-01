@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plainly</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Main View ── -->
+    <div id="mainView" class="view">
+
+      <header class="header">
+        <div class="logo">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect width="20" height="20" rx="5" fill="#6366f1"/>
+            <text x="10" y="14.5" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="-apple-system, system-ui, sans-serif">P</text>
+          </svg>
+          <span class="logo-text">Plainly</span>
+        </div>
+        <div class="header-right">
+          <button class="toggle-btn" id="toggleBtn" title="Enable / disable Plainly" aria-pressed="true">
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+            <span class="toggle-label" id="toggleLabel">ON</span>
+          </button>
+          <button class="icon-btn" id="settingsBtn" title="Settings">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+        </div><!-- /header-right -->
+      </header>
+
+      <div class="mode-selector" role="group" aria-label="Explanation mode">
+        <button class="mode-btn active" data-mode="adhd">ADHD</button>
+        <button class="mode-btn" data-mode="eli5">ELI5</button>
+        <button class="mode-btn" data-mode="detailed">Detailed</button>
+        <button class="mode-btn" data-mode="custom">Custom</button>
+      </div>
+
+      <!-- Shown only when Custom tab is active -->
+      <div class="custom-prompt-bar" id="customPromptBar" style="display:none">
+        <textarea
+          id="inlineCustomPrompt"
+          class="custom-prompt-input"
+          placeholder="Describe how you want the text explained… e.g. 'Explain this like a lawyer' or 'Summarise in one sentence'"
+          rows="3"
+        ></textarea>
+        <div class="custom-prompt-actions">
+          <span class="custom-prompt-hint">Saved automatically · re-runs on Apply</span>
+          <button class="apply-btn" id="applyCustomPromptBtn">Apply ↵</button>
+        </div>
+      </div>
+
+      <main class="main" id="main" aria-live="polite"></main>
+
+      <div class="history-section" id="historySection">
+        <div class="history-header">
+          <span>Recent</span>
+          <button class="text-btn" id="clearHistoryBtn">Clear all</button>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+
+      <!-- Shown after 10 explanations, dismissed permanently -->
+      <div id="reviewBanner" class="review-banner" style="display:none">
+        <div class="review-banner-text">
+          <div class="review-banner-title">Enjoying Plainly? 💜</div>
+          <div class="review-banner-sub">A quick review helps more people find it</div>
+        </div>
+        <div class="review-banner-btns">
+          <a id="reviewLink" href="#" target="_blank" class="review-star-btn">★ Leave a review</a>
+          <button class="review-dismiss-btn" id="dismissReviewBtn">Not now</button>
+        </div>
+      </div>
+
+      <!-- Always visible footer -->
+      <footer class="panel-footer">
+        <a id="footerReviewLink" href="#" target="_blank" class="footer-link">★ Review</a>
+        <span class="footer-sep">·</span>
+        <a id="footerFeedbackLink" href="#" target="_blank" class="footer-link">💬 Feedback</a>
+        <span class="footer-sep">·</span>
+        <span class="footer-version">v1.0</span>
+      </footer>
+
+    </div><!-- /mainView -->
+
+    <!-- ── Settings View ── -->
+    <div id="settingsView" class="view" style="display:none">
+
+      <header class="header">
+        <button class="icon-btn" id="backBtn" title="Back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <span class="settings-title">Settings</span>
+        <div style="width:26px"></div><!-- spacer to centre title -->
+      </header>
+
+      <div class="settings-body">
+
+        <!-- Provider -->
+        <div class="s-section">
+          <div class="s-label">AI Provider</div>
+          <div class="s-provider-grid" id="sProviderGrid">
+            <label class="s-provider-card" data-provider="openai">
+              <input type="radio" name="sProvider" value="openai">
+              <div class="s-provider-name">OpenAI</div>
+              <div class="s-provider-desc">GPT-4o mini</div>
+            </label>
+            <label class="s-provider-card" data-provider="groq">
+              <input type="radio" name="sProvider" value="groq">
+              <div class="s-provider-name">Groq</div>
+              <div class="s-provider-desc">Free tier</div>
+            </label>
+            <label class="s-provider-card" data-provider="custom">
+              <input type="radio" name="sProvider" value="custom">
+              <div class="s-provider-name">Custom</div>
+              <div class="s-provider-desc">Ollama / n8n</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- API Key -->
+        <div class="s-section">
+          <div class="s-label">API Key</div>
+          <div class="s-input-row">
+            <input type="password" id="sApiKey" class="s-input" placeholder="Paste your key…" autocomplete="off" spellcheck="false">
+            <button class="s-eye-btn" id="sToggleKey" title="Show / hide">
+              <svg id="sEyeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <div class="s-hint" id="sKeyHint">
+            Get your <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI API key →</a>
+          </div>
+        </div>
+
+        <!-- Model (OpenAI / Groq) -->
+        <div class="s-section" id="sModelSection">
+          <div class="s-label">Model</div>
+          <select id="sModel" class="s-input s-select"></select>
+        </div>
+
+        <!-- Custom endpoint -->
+        <div class="s-section" id="sCustomSection" style="display:none">
+          <div class="s-label">API URL</div>
+          <input type="url" id="sCustomEndpoint" class="s-input" placeholder="http://localhost:11434/v1/chat/completions">
+          <div class="s-label" style="margin-top:10px">Model name</div>
+          <input type="text" id="sCustomModel" class="s-input" placeholder="llama3.2" style="margin-top:6px">
+        </div>
+
+        <!-- Mode -->
+        <div class="s-section">
+          <div class="s-label">Default Explanation Mode</div>
+          <div class="s-radio-group">
+            <label class="s-radio-item">
+              <input type="radio" name="sMode" value="adhd">
+              <div>
+                <div class="s-radio-title">ADHD-friendly</div>
+                <div class="s-radio-desc">Bullets, bold key terms, under 150 words</div>
+              </div>
+            </label>
+            <label class="s-radio-item">
+              <input type="radio" name="sMode" value="eli5">
+              <div>
+                <div class="s-radio-title">ELI5</div>
+                <div class="s-radio-desc">Simple analogy, 2–4 sentences</div>
+              </div>
+            </label>
+            <label class="s-radio-item">
+              <input type="radio" name="sMode" value="detailed">
+              <div>
+                <div class="s-radio-title">Detailed</div>
+                <div class="s-radio-desc">Structured breakdown with examples</div>
+              </div>
+            </label>
+            <label class="s-radio-item">
+              <input type="radio" name="sMode" value="custom">
+              <div>
+                <div class="s-radio-title">Custom prompt</div>
+                <div class="s-radio-desc">Write your own system prompt</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Custom prompt -->
+        <div class="s-section" id="sCustomPromptSection" style="display:none">
+          <div class="s-label">Custom System Prompt</div>
+          <textarea id="sCustomPrompt" class="s-input s-textarea" placeholder="You are a helpful assistant. Explain text clearly by…"></textarea>
+        </div>
+
+        <!-- Behaviour -->
+        <div class="s-section">
+          <div class="s-label">Min. selection length (chars)</div>
+          <input type="number" id="sMinLength" class="s-input s-input-sm" min="5" max="500" value="20">
+          <div class="s-hint">Selections shorter than this are ignored.</div>
+        </div>
+
+      </div><!-- /settings-body -->
+
+      <div class="settings-footer">
+        <div class="save-alert" id="sSaveAlert" style="display:none">✓ Saved</div>
+        <button class="save-btn" id="saveSettingsBtn">Save Settings</button>
+      </div>
+
+    </div><!-- /settingsView -->
+
+  </div>
+  <script src="sidepanel.js"></script>
+</body>
+</html>
