@@ -1,8 +1,6 @@
 // ── Links — update both before publishing ─────────────────────────────────────
-// STORE_URL: go to chrome://extensions → find your extension ID after publishing
-const STORE_URL    = 'https://chromewebstore.google.com/detail/plainly/EXTENSION_ID/reviews';
-// FEEDBACK_URL: replace with your GitHub repo, Canny board, or Tally form
-const FEEDBACK_URL = 'https://github.com/YOUR_USERNAME/plainly/issues/new?labels=feature-request&title=Feature+request:+';
+const STORE_URL    = 'https://chromewebstore.google.com/detail/plainly/ekkeccmiolilkkaeehehoicddecmcanp/reviews';
+const FEEDBACK_URL = 'https://github.com/coder-RT/plainly/issues/new?labels=feature-request&title=Feature+request:+';
 
 // Show review banner after this many total explanations
 const REVIEW_TRIGGER = 10;

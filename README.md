@@ -8,7 +8,7 @@
 
 A Chrome extension that instantly explains any text you highlight — in ADHD-friendly bullets, plain English (ELI5), detailed breakdowns, or your own custom prompt. Uses your own AI API key, runs entirely in your browser.
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/EXTENSION_ID?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&color=6366f1)](https://chromewebstore.google.com/detail/plainly/EXTENSION_ID)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ekkeccmiolilkkaeehehoicddecmcanp?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&color=6366f1)](https://chromewebstore.google.com/detail/plainly/ekkeccmiolilkkaeehehoicddecmcanp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6366f1.svg)](LICENSE)
 [![Privacy: No data collected](https://img.shields.io/badge/Privacy-No%20data%20collected-10b981.svg)](PRIVACY.md)
 
@@ -65,7 +65,7 @@ A Chrome extension that instantly explains any text you highlight — in ADHD-fr
 
 ### Option 1 — Chrome Web Store (recommended)
 
-> Install directly from the [Chrome Web Store →](https://chromewebstore.google.com/detail/plainly/EXTENSION_ID)
+> Install directly from the [Chrome Web Store →](https://chromewebstore.google.com/detail/plainly/ekkeccmiolilkkaeehehoicddecmcanp)
 
 ### Option 2 — Load unpacked (developer)
 
